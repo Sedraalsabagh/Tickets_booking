@@ -11,4 +11,12 @@ from .serializers import SingUpSerializer
 def register(request):
     data=request.data
     user=SingUpSerializer(data=data)
-    
+
+    if user.is_valid():
+        if not User.objects.filter(username=data('email')).exists():
+            user=User.objects.create(
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                email=data['email'],
+                password=make_password(data['password']),
+            )
