@@ -20,3 +20,20 @@ def register(request):
                 email=data['email'],
                 password=make_password(data['password']),
             )
+            return Response(
+                {'details':'Your account registered successfully'},
+               
+                status=status.HTTP_201_CREATED
+                )
+        else:
+            return Response(
+                {'error':'This email already exists!'},
+               
+                status=status.HTTP_400_BAD_REQUEST
+                  )
+
+    else:
+        return Response(user.errors)
+               
+                
+            
