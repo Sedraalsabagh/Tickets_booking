@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,14 +32,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [#safaaa
     #sedra
-    'user' ,
+    #'account',
+    'user',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework' ,
+     'rest_framework' ,
+     'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +85,23 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
+
+SIMPLE_JWT ={
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=15) ,
+    'REFRESH_TOKEN_LIFETIME':timedelta(days=1) ,
+    'BLACKLIST_AFTER_ROTATION':True ,
+    'AUTH_HEADER_TYPES':('Bearer,') ,
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',) ,
+    
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
