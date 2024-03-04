@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password 
 from rest_framework import status
 from .serializers import SingUpSerializer
-
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 @api_view
@@ -35,5 +35,8 @@ def register(request):
     else:
         return Response(user.errors)
                
-                
-            
+    @api_view(['GET'])          
+    @Permission_classes([IsAuthenticated])       
+    def current_user(request):
+        user=SingUpSerializer(request.user)
+        return Response(user.data)
