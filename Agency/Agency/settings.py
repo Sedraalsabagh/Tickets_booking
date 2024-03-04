@@ -39,8 +39,9 @@ INSTALLED_APPS = [#safaaa
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'rest_framework' ,
+    'rest_framework' ,
     'rest_framework_simplejwt',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
