@@ -35,8 +35,8 @@ def register(request):
     else:
         return Response(user.errors)
                
-    @api_view(['GET'])          
-    @Permission_classes([IsAuthenticated])       
-    def current_user(request):
+@api_view(['GET'])          
+@permission_classes([IsAuthenticated])       
+def current_user(request):
         user=SingUpSerializer(request.user)
         return Response(user.data)
