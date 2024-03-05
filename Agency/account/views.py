@@ -4,10 +4,11 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password 
 from rest_framework import status
 from .serializers import SingUpSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated #لحماية المسارات
+from django.contrib.auth.models import User
 # Create your views here.
 
-@api_view
+@api_view(['POST'])
 def register(request):
     data=request.data
     user=SingUpSerializer(data=data)
@@ -34,9 +35,15 @@ def register(request):
 
     else:
         return Response(user.errors)
+   
+    #@api_view(['GET'])
+    #@Permission_class([IsAuthenticated])
+    #def current_user(request) :
+     #   user=SingUpSerializer(request.user)
+      #  return Response(user.data)
                
-    @api_view(['GET'])          
-    @Permission_classes([IsAuthenticated])       
-    def current_user(request):
-        user=SingUpSerializer(request.user)
-        return Response(user.data)
+   # @api_view(['GET'])          
+   # @Permission_classes([IsAuthenticated])       
+   # def current_user(request):
+    #    user=SingUpSerializer(request.user)
+     #   return Response(user.data)

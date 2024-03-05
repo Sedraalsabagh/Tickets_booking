@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [#safaaa
     #sedra
-    
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +41,8 @@ INSTALLED_APPS = [#safaaa
     'django.contrib.staticfiles',
     'rest_framework' ,
     'rest_framework_simplejwt',
-    'account.apps.AccountConfig',
+    
+    
 ]
 
 MIDDLEWARE = [
