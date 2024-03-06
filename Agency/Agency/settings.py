@@ -41,6 +41,7 @@ INSTALLED_APPS = [#safaaa
     'django.contrib.staticfiles',
     'rest_framework' ,
     'rest_framework_simplejwt',
+    'flight',
     
     
 ]

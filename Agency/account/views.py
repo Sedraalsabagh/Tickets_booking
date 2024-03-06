@@ -14,7 +14,7 @@ def register(request):
     user=SingUpSerializer(data=data)
 
     if user.is_valid():
-        if not User.objects.filter(username=data('email')).exists():
+        if not User.objects.filter(username=data['email']).exists():
             user=User.objects.create(
                 first_name=data['first_name'],
                 last_name=data['last_name'],
@@ -25,6 +25,7 @@ def register(request):
                 {'details':'Your account registered successfully'},
                
                 status=status.HTTP_201_CREATED
+                
                 )
         else:
             return Response(
