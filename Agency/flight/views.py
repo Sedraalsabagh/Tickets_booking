@@ -45,4 +45,3 @@ def create_review(request,pk):
                 rating=data['rating'],
                 comment=datae['comment']
             )
-
