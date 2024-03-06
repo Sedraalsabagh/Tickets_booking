@@ -1,5 +1,7 @@
 from django.db import models
-from datetime import timedelta
+from datetime import timedelta,datetime
+
+from airline.models import Airline
 
 # Create your models here.
 
@@ -18,13 +20,12 @@ class Flight(models.Model):
 
 
 class FlightSeatClass(models.Model):
-    seats_type=models.IntegerField(max_lenght=20)
+    seats_type=models.IntegerField()
     flight_id=models.ForeignKey(Flight,on_delete=models.CASCADE)
     price=models.FloatField(max_length=100)
     count=models.IntegerField(max_length=100)
     def __str__(self):
       return self.seats_type
-
 
 
 
