@@ -15,6 +15,7 @@ class Flight(models.Model):
     total_rate=models.IntegerField(default=0)
     def __str__(self):
       return self.flight_id
+      #s
       
 
 
