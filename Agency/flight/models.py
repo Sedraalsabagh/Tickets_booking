@@ -4,7 +4,7 @@ from datetime import timedelta
 # Create your models here.
 
 class Flight(models.Model):
-    flight_id=models.IntegerField(max_lenght=10)
+    flight_id=models.IntegerField(max_length=10,blank=False)
     id_airline=models.ForeignKey(Airline,on_delete=models.CASCADE)
     dateTime=models.DateTimeField(default=datetime.now)
     duration =models.DurationField(default=timedelta(days=0))
