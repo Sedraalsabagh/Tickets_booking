@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import timedelta,datetime
+from django.contrib.auth.models import User
 
 from airline.models import Airline
 
@@ -29,3 +30,11 @@ class FlightSeatClass(models.Model):
 
 
 
+class Review(models.Model):
+    flight_id=models.ForeignKey(Flight,null=True,on_delete=models.CASCADE,related_name='reviews')
+    user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
+    comment=models.TextField(max_length=2000,default="",blank=False)
+    ratings=models.IntegerField(default=0)
+    createAt=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+      return self.ratings
