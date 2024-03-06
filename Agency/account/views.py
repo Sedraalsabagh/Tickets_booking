@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view,permission_classes
+from rest_framework.decorators import api_view ,permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password 
 from rest_framework import status
@@ -36,9 +36,10 @@ def register(request):
 
     else:
         return Response(user.errors)
+   
                
 @api_view(['GET'])          
 @permission_classes([IsAuthenticated])       
 def current_user(request):
-    user=SingUpSerializer(request.user)
-    return Response(user.data)
+  user=SingUpSerializer(request.user)
+  return Response(user.data)
