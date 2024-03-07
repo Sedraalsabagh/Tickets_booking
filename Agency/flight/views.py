@@ -39,9 +39,34 @@ def create_review(request,pk):
         flight.save()
         return Response({'details':'Flight review updated'})
     else:
-            Review.object.create(
-                user=user,
-                flight=flight,
-                rating=data['rating'],
-                comment=datae['comment']
+        Review.object.create(
+            user=user,
+            flight=flight,
+            rating=data['rating'],
+            comment=datae['comment']
             )
+        rating=flight.reviews.aggregate(avg_ratings=Avg('rating'))
+        flight.ratings=rating['avg_ratings']
+        flight.save()
+        return Response({'details':'flight review created'})
+
+
+@api_view
+@permission_classes([IsAuthenticated])
+def delete_reviews(request,pk):
+    user=request.user
+    flight=get_object_or_404(Flight,id=pk)
+
+    review=flight.reviews.filter(user=user)
+
+    if review.exists():
+        review.delete()
+        rating=flight.reviews.aggregate(avg_ratings=Avg('rating'))
+        if rating['avg_ratings'] is None:
+            rating['avg_ratings']=0
+            flight.ratings=rating['avg_ratings']
+            flight.save()
+            return Response({'details':'flight review deleted'})
+
+    else:
+        return Response({'error':'Reviews not found'},status==status.HTTP_404_NOT_FOUND)
