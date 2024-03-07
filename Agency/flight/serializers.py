@@ -3,14 +3,13 @@ from .models import Flight
 
 
 class FlightSerializer(serializers.ModelSerializer):
-
-    class Meta:
+ 
+     class Meta:
         model=Flight
         fields="__all__"
+``
+#class ReviewSerializer(serializers.ModelSerializer):
 
-class ReviewSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model=Review
-        fields="__all__"
-
+ #   class Meta:
+  #      model=Review
+   #     fields="__all__"

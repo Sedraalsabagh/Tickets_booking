@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [#safaaa
     #sedra
+    'flight',
     'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,7 +42,8 @@ INSTALLED_APPS = [#safaaa
     'django.contrib.staticfiles',
     'rest_framework' ,
     'rest_framework_simplejwt',
-    'flight',
+     'django_filters',
+    
     'airline',
     
     
