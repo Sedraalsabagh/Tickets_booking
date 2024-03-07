@@ -1,72 +1,70 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render ,get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .filtters import FlightsFilter
 from .models import Flight
 from .serializers import FlightSerializer
-from rest_framework.pagination import PageNumberPagination
-from django.db.models import Avg
+#from rest_framework.pagination import PageNumberPagination
+#from django.db.models import Avg
 # Create your views here.
 
-@api_view
-def get_all_flight(request):
+@api_view(['GET'])
+def get_all_flight(request) :
+    filterset=FlightsFilter(request.GET,queryset=Flight.object.all().order_by('id'))
+    #flights=Flight.objects.all()
+    serializer=FlightSerializer(filterset.qs,many=True)
+   # print(flight)
+    return Response({"flights":serializer.data})
 
- filterset=Flight(request.GET,queryset=Flight.object.all().order_by('id'))
- count=filterset.qs.coun()
- resPage=2
+
+@api_view(['GET'])
+def get_by_id_flight(request):
+   flights=get_object_or_404(Flight,id=pk)
+   serializer=FlightSerializer(flights,many=False)
+   print(flight)
+   return Response({"flights":serializer.data})
+
+
+
+    
+
+
+
+
+#@api_view
+#def get_all_flight(request):
+
+ #filterset=Flight(request.GET,queryset=Flight.object.all().order_by('id'))
+ #count=filterset.qs.coun()
+ #resPage=2
  
 
-@api_view(['POST'])
-@permission_class([IsAuthentication])
-def create_review(request,pk):
-    user=request.user
-    flight=get_object_or_404(Flight,id=pk)
-    data=request.data
-    review=flight.reviews.filter(user=user)
+#@api_view(['POST'])
+#@permission_class([IsAuthentication])
+#def create_review(request,pk):
+ #   user=request.user
+  #  flight=get_object_or_404(Flight,id=pk)
+   # data=request.data
+    #review=flight.reviews.filter(user=user)
     
-    if data['rating']<=0 or data['rating']>5:
-        flight=Flight.object.create(**data,user=request.user)
-        res=FlightSerializer(flight,many=False)
+    #if data['rating']<=0 or data['rating']>5:
+     #   flight=Flight.object.create(**data,user=request.user)
+      #  res=FlightSerializer(flight,many=False)
         
-        return Response({"error":'please select between 1 to 5 only'},status=status.HTTP_400_BAD_REQUEST)
-    elif review.exists():
-        new_review={'rating':data['rating'],'comment':data['comment']}
-        review.update(**new_review)
+       # return Response({"error":'please select between 1 to 5 only'},status=status.HTTP_400_BAD_REQUEST)
+    #elif review.exists():
+     #   new_review={'rating':data['rating'],'comment':data['comment']}
+      #  review.update(**new_review)
         
         rating=flight.reviws.aggregate(avg_rating=Avg('rating'))
         flight.rating=rating['avg_ratings']
         flight.save()
         return Response({'details':'Flight review updated'})
     else:
-        Review.object.create(
-            user=user,
-            flight=flight,
-            rating=data['rating'],
-            comment=datae['comment']
+            Review.object.create(
+                user=user,
+                flight=flight,
+                rating=data['rating'],
+                comment=datae['comment']
             )
-        rating=flight.reviews.aggregate(avg_ratings=Avg('rating'))
-        flight.ratings=rating['avg_ratings']
-        flight.save()
-        return Response({'details':'flight review created'})
-
-
-@api_view
-@permission_classes([IsAuthenticated])
-def delete_reviews(request,pk):
-    user=request.user
-    flight=get_object_or_404(Flight,id=pk)
-
-    review=flight.reviews.filter(user=user)
-
-    if review.exists():
-        review.delete()
-        rating=flight.reviews.aggregate(avg_ratings=Avg('rating'))
-        if rating['avg_ratings'] is None:
-            rating['avg_ratings']=0
-            flight.ratings=rating['avg_ratings']
-            flight.save()
-            return Response({'details':'flight review deleted'})
-
-    else:
-        return Response({'error':'Reviews not found'},status==status.HTTP_404_NOT_FOUND)
