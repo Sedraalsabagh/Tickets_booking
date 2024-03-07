@@ -57,14 +57,14 @@ def get_by_id_flight(request):
      #   new_review={'rating':data['rating'],'comment':data['comment']}
       #  review.update(**new_review)
         
-        rating=flight.reviws.aggregate(avg_rating=Avg('rating'))
-        flight.rating=rating['avg_ratings']
-        flight.save()
-        return Response({'details':'Flight review updated'})
-    else:
-            Review.object.create(
-                user=user,
-                flight=flight,
-                rating=data['rating'],
-                comment=datae['comment']
-            )
+       # rating=flight.reviws.aggregate(avg_rating=Avg('rating'))
+        #flight.rating=rating['avg_ratings']
+        #flight.save()
+       # return Response({'details':'Flight review updated'})
+    #else:
+            #Review.object.create(
+             #   user=user,
+              #  flight=flight,
+               # rating=data['rating'],
+                #comment=datae['comment']
+            #)
