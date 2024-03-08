@@ -17,7 +17,7 @@ class Flight(models.Model):
     notes=models.TextField(max_length=200)
     #total_rate=models.IntegerField(default=0)
     def str(self):
-      return self.flight_id
+      return self.duration
       
       
 
