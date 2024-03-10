@@ -43,3 +43,9 @@ def register(request):
 def current_user(request):
   user=SingUpSerializer(request.user)
   return Response(user.data)
+
+
+
+
+
+  

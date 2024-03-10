@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 #from flights.urls import urlpatterns as flights_urls
+from rest_framework_simplejwt.tokens import AccessToken
 
 urlpatterns = [
     
