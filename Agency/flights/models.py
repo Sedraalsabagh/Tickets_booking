@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from account.models import User 
 from datetime import timedelta,datetime
 # Create your models here.
 
@@ -14,8 +14,12 @@ class Flight(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     def str(self):
       return self.duration
-      
 
+
+
+
+
+      
 
 
 

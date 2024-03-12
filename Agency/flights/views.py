@@ -19,7 +19,7 @@ def get_all_flights(request) :
     return Response({"flights":serializer.data}) 
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def get_by_id_flights(request,pk) :
     flights = get_object_or_404(Flight, id=pk)
     serializer=FlightSerializer(flights,many=False)
@@ -87,3 +87,5 @@ def delete_review(request,pk):
 
     else:
         return Response({'error':'Review not found'},status=status.HTTP_404_NOT_FOUND)
+
+

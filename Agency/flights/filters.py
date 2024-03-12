@@ -18,5 +18,4 @@ class FlightsFilter(django_filters.FilterSet):
 
 
 
-
         
