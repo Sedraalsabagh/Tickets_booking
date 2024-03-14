@@ -3,12 +3,9 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-
-
-
 class User(AbstractUser) :
     
-    
+
     email=models.EmailField(max_length=254,unique=True)
     password=models.CharField(max_length=128,unique=True)
     first_name=models.CharField(max_length=100,blank=True,null=True)
@@ -31,8 +28,17 @@ class Customer(models.Model):
         location=models.CharField(max_length=40,blank=True,null=True)
         passport_number=models.CharField(max_length=100,blank=True,null=True)
         gender=models.SmallIntegerField(choices=GUNDER_CHOICES,null=True)
-
+        def str(self):
+         return self.user
 class Employee(models.Model):
         user =models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
         phone_number=models.CharField(max_length=20,blank=True,null=True)
-        location=models.CharField(max_length=40,blank=True,null=True)
+        location=models.CharField(max_length=40,blank=True,null=True) 
+        def str(self):
+         return self.Username
+
+
+
+
+
+

@@ -1,10 +1,12 @@
 from rest_framework import serializers
-from .models import Flight,Review
+from .models import Flight,Review,Airline
 from rest_framework_simplejwt.tokens import AccessToken
 
 
 class FlightSerializer(serializers.ModelSerializer) :
     
+    
+    airline = serializers.PrimaryKeyRelatedField(queryset=Airline.objects.all())  # Add this field
     class Meta:
         model=Flight
         fields="__all__"

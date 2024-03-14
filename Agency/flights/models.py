@@ -3,6 +3,15 @@ from account.models import User
 from datetime import timedelta,datetime
 # Create your models here.
 
+class Airline (models.Model) :
+   airline_id=models.IntegerField(blank=False)
+   airline_name=models.CharField(max_length=100) 
+   description=models.TextField(max_length=400)
+   #policy_id=models.ForeignKey(Policy,on_delete=models.CASCADE)  
+   
+   def __str__(self):
+     return self.airline_name     
+
 class Flight(models.Model):
     flight_id=models.IntegerField(blank=False)
     dateTime=models.DateTimeField(default=datetime.now)
@@ -12,14 +21,13 @@ class Flight(models.Model):
     notes=models.TextField(max_length=200)
     total_rate=models.IntegerField(default=0)
     user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
-    def str(self):
+    airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
+
+    def __str__(self):
       return self.duration
 
 
 
-
-
-      
 
 
 
@@ -28,7 +36,7 @@ class Flight(models.Model):
  #   flight_id=models.ForeignKey(Flight,on_delete=models.CASCADE)
  #   price=models.FloatField(max_length=100)
   #  count=models.IntegerField()
-   # def str(self):
+   # def __str__(self):
     #  return self.seats_type
 
 
@@ -39,5 +47,5 @@ class Review(models.Model):
     comment=models.TextField(max_length=2000,default="",blank=False)
     ratings=models.IntegerField(default=0)
     createAt=models.DateTimeField(auto_now_add=True)
-    def str(self):
+    def __str__(self):
       return self.ratings

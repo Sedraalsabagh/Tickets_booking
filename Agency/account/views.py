@@ -6,8 +6,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from .serializers import SingUpSerializer
 from rest_framework.permissions import IsAuthenticated #لحماية المسارات
+from .models import User,Customer,Employee
 #from django.contrib.auth.models import User
-from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -24,6 +24,10 @@ def register(request):
                 username=data['email'],
                 password=make_password(data['password']),
             )
+
+
+
+
             return Response(
                 {'details':'Your account registered successfully'},
                
@@ -46,6 +50,10 @@ def register(request):
 def current_user(request):
   user=SingUpSerializer(request.user)
   return Response(user.data)
+
+
+
+
 
 
 

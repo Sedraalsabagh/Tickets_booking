@@ -8,5 +8,6 @@ urlpatterns = [
     path('api/',views.get_all_flights,name='flight'),
     path('<str:pk>/reviews',views.create_review,name='create_review'),
     path('<str:pk>/reviews/delete',views.delete_review,name='delete_review'),
+    path('new/',views.new_flight,name='new_flight'),
 
              ]
