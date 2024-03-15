@@ -3,11 +3,23 @@ from account.models import User
 from datetime import timedelta,datetime
 # Create your models here.
 
+
+
+class Policy(models.Model):
+    policy_id = models.IntegerField(default=1)
+    refundable = models.BooleanField(default=False)
+    exchangeable = models.BooleanField(default=False)
+    exchangeable_condition = models.CharField(max_length=255, blank=True, null=True)
+    cancellation_period = models.DurationField(default=0)
+
+    def __str__(self):
+        return self.policy_id
+
 class Airline (models.Model) :
-   airline_id=models.IntegerField(blank=False)
+   airline_id=models.IntegerField(default=0,blank=False)
    airline_name=models.CharField(max_length=100) 
    description=models.TextField(max_length=400)
-   #policy_id=models.ForeignKey(Policy,on_delete=models.CASCADE)  
+   policy_id=models.ForeignKey(Policy,on_delete=models.CASCADE )  
    
    def __str__(self):
      return self.airline_name     
@@ -20,7 +32,7 @@ class Flight(models.Model):
     airportArrival=models.CharField(max_length=40)
     notes=models.TextField(max_length=200)
     total_rate=models.IntegerField(default=0)
-    user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
+    #user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
 
     def __str__(self):
