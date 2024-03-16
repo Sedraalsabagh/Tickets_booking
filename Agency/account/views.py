@@ -6,12 +6,11 @@ from rest_framework.decorators import api_view ,permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password 
 from rest_framework import status
-from .serializers import SingUpSerializer, UserSerializer,LoginSerializer
+from .serializers import SingUpSerializer,LoginSerializer
 from rest_framework.permissions import IsAuthenticated #لحماية المسارات
-from .models import User,Customer#,Employee
+from .models import User
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password
-
+from rest_framework_simplejwt.tokens import RefreshToken
 #from django.contrib.auth.models import User
 
 # Create your views here.
