@@ -13,7 +13,7 @@ class Policy(models.Model):
     cancellation_period = models.DurationField(default=0)
 
     def __str__(self):
-        return self.policy_id
+        return str(self.policy_id)
 
 class Airline (models.Model) :
    airline_id=models.IntegerField(default=0,blank=False)
@@ -36,7 +36,7 @@ class Flight(models.Model):
     airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
 
     def __str__(self):
-      return self.duration
+      return str(self.duration)
 
 
 
@@ -60,4 +60,4 @@ class Review(models.Model):
     ratings=models.IntegerField(default=0)
     createAt=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-      return self.ratings
+      return str(self.ratings)

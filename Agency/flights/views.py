@@ -35,7 +35,7 @@ def get_all(request) :
 
 
 
-
+'''
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) # بس الموظف يلي عامل ريجستر بيقدر يضيف رحلات
 def new_flight(request) :
@@ -54,7 +54,7 @@ def new_flight(request) :
     else: 
        return   Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-
+'''
 
 
 

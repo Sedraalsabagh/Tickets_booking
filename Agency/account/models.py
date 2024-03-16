@@ -6,21 +6,22 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser) :
     
 
-    email=models.EmailField(max_length=254,unique=True)
-    password=models.CharField(max_length=128,unique=True)
     first_name=models.CharField(max_length=100,blank=True,null=True)
     last_name=models.CharField(max_length=100,blank=True,null=True)
+    username=models.EmailField(max_length=254,unique=True,blank=False,null=False)
     created_at=models.DateTimeField(auto_now_add=True)
     is_staff=models.BooleanField(default=False)
     is_superuser=models.BooleanField(default=False)
-    is_active=models.BooleanField(default=False)
-
+    is_active=models.BooleanField(default=True)
+    #password=models.CharField(max_length=128)
     #USERNAME-FIELD=='email',
+    def __str__(self):
+        return self.username
 
 class Customer(models.Model):
         GUNDER_CHOICES=(
         (1,'male'),
-        (2,'femail'),
+        (2,'female'),
        
     )
         user =models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
@@ -28,14 +29,14 @@ class Customer(models.Model):
         location=models.CharField(max_length=40,blank=True,null=True)
         passport_number=models.CharField(max_length=100,blank=True,null=True)
         gender=models.SmallIntegerField(choices=GUNDER_CHOICES,null=True)
-        def str(self):
-         return self.user
-class Employee(models.Model):
-        user =models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-        phone_number=models.CharField(max_length=20,blank=True,null=True)
-        location=models.CharField(max_length=40,blank=True,null=True) 
-        def str(self):
-         return self.Username
+        def __str__(self):
+         return self(self.user)
+#class Employee(models.Model):
+        #user =models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+        #phone_number=models.CharField(max_length=20,blank=True,null=True)
+        #location=models.CharField(max_length=40,blank=True,null=True) 
+        #def str(self):
+         #return self.Username
 
 
 
