@@ -106,6 +106,9 @@ SIMPLE_JWT={
     'AUTH_TOKEN_CLASSES':('rest_framework_simplejwt.tockens.AccessToken',),
 }
 
+MEDIA_URL='media/'
+MEDIA_ROOT=BASE_DIR/'media'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

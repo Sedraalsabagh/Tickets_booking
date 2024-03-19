@@ -1,14 +1,13 @@
 from rest_framework.authtoken.models import Token
 from django.shortcuts import render
 from rest_framework.authtoken.views import ObtainAuthToken
-
 from rest_framework.decorators import api_view ,permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password 
 from rest_framework import status
 from .serializers import SingUpSerializer,LoginSerializer
 from rest_framework.permissions import IsAuthenticated #لحماية المسارات
-from .models import User
+from .models import User,UserProfile
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 #from django.contrib.auth.models import User
@@ -28,8 +27,9 @@ def register(request):
                 username=data['email'],
                 password=make_password(data['password']),
             )
-            #user.save()
-             
+            user.save()
+            #create the user profile
+            UserProfile.objects.create(user=user)
 
 
             return Response(
@@ -90,8 +90,42 @@ def current_user(request):
 
 
 
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def user_profile(request):
+    user_profile = None
 
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
 
+    if request.method == 'GET':
+        if user_profile:
+            serializer = UserProfileSerializer(user_profile)
+            return Response(serializer.data)
+        else:
+            return Response("Profile does not exist", status=404)
+        
+    elif request.method in ['POST', 'PUT']:
+        if isinstance(request.user, User):
+            serializer = UserProfileSerializer(data=request.data, instance=user_profile)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=201)
+            return Response(serializer.errors, status=400)
+        else:
+            return Response("User is not authenticated", status=401)
+
+    elif request.method == 'DELETE':
+        if user_profile:
+            user_profile.delete()
+            return Response("Profile deleted successfully")
+        else:
+            return Response("Profile does not exist", status=404)
+
+    else:
+        return Response("Method not allowed", status=405)
 
 
 

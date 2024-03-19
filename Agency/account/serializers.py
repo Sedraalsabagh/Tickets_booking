@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,UserProfile
 
 class SingUpSerializer(serializers.ModelSerializer):
 
@@ -30,5 +30,19 @@ class LoginSerializer(serializers.ModelSerializer):
 extra_kword={
              'username':{'required':True,'allow_blank':False},
              'password':{'required':True,'allow_blank':False,'min_length':8}
+           
+             }
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =UserProfile
+        fields=('age','gender','address')
+
+        extra_kword={
+            
+             'age':{'required':True,'allow_blank':False},
+              
+              'address':{'required':True,'allow_blank':False},
            
              }
