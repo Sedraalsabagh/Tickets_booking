@@ -26,9 +26,11 @@ urlpatterns = [
     
     path('flight/',include("flights.urls")),
     path('account/',include('account.urls')),
+    path('booking/',include('booking.urls')),
+
     path('api/token/',TokenObtainPairView.as_view()),
     path('admin/', admin.site.urls),
-    
+    #path('', HomePageView.as_view(), name='home'),
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import FlightBookingViewSet
-
-router = DefaultRouter()
-router.register('flight-bookings', FlightBookingViewSet)
+from .views import BookingView
 
 urlpatterns = [
-    path('', include(router.urls)),
+path('bookings/', BookingView.as_view(), name='create_booking'),
 ]
