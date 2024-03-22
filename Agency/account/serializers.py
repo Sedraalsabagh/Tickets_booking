@@ -37,7 +37,7 @@ extra_kword={
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model =UserProfile
-        fields=('age','gender','address')
+        fields=('date_of_birth','gender','address')
 
         extra_kword={
             

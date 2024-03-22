@@ -9,6 +9,9 @@ from .serializer import FlightSerializer
 from .filters import FlightsFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
+from .filters import FlightsFilter
+from rest_framework import generics
+
 # Create your views here.
 @api_view(['GET'])
 def get_all_flights(request) :
@@ -112,3 +115,9 @@ def delete_review(request,pk):
         return Response({'error':'Review not found'},status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+class FlightListView(generics.ListAPIView):
+    queryset = Flight.objects.all()
+    serializer_class = FlightSerializer
+    filterset_class = FlightsFilter

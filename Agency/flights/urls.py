@@ -1,5 +1,6 @@
 from django.urls import path,include
 from . import views
+from .views import FlightListView
 
 
 urlpatterns = [
@@ -9,5 +10,6 @@ urlpatterns = [
     path('<str:pk>/reviews',views.create_review,name='create_review'),
     path('<str:pk>/reviews/delete',views.delete_review,name='delete_review'),
     #path('new/',views.new_flight,name='new_flight'),
+    #path('search/', FlightListView.as_view(), name='search-flights'),
 
              ]

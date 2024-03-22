@@ -39,11 +39,19 @@ class Customer(models.Model):
          #return self.Username
 
 class UserProfile(models.Model):
+    GUNDER_CHOICES=(
+        (1,'male'),
+        (2,'female'),
+       
+    )
     user=models.OneToOneField(settings.AUTH_USER_MODEL,
     on_delete=models.CASCADE)
 
     date_of_birth=models.DateField(blank=True,null=True)
     photo=models.ImageField(upload_to='users%Y/%m/%d/',blank=True)
+    gender=models.SmallIntegerField(choices=GUNDER_CHOICES,null=True)
+    address=models.CharField(max_length=40,blank=True,null=True)
+
 
     def __str__(self):
         return str(self.photo)

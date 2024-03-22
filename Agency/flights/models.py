@@ -34,7 +34,10 @@ class Flight(models.Model):
     total_rate=models.IntegerField(default=0)
     #user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
-
+    departure_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
+    destination_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
+    departure_country = models.CharField(max_length=100,blank=False,null=False,default='unknow')
+    destination_country = models.CharField(max_length=100,blank=False,null=False,default='unknow')
     def __str__(self):
       return str(self.duration)
 
@@ -43,13 +46,18 @@ class Flight(models.Model):
 
 
 
-#class FlightSeatClass(models.Model):
-#    seats_type=models.IntegerField()
- #   flight_id=models.ForeignKey(Flight,on_delete=models.CASCADE)
- #   price=models.FloatField(max_length=100)
-  #  count=models.IntegerField()
-   # def __str__(self):
-    #  return self.seats_type
+class FlightSeatClass(models.Model):
+    CLASS_CHOICES = (
+        ('Economy', 'Economy'),
+        ('Business Class', 'Business Class'),
+        ('First Class', 'First Class'),
+    )
+    seats_type=models.IntegerField()
+    flight=models.ForeignKey(Flight,on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=5)  
+    capacity = models.IntegerField()
+    def __str__(self):
+      return self.seats_type
 
 
 

@@ -11,6 +11,10 @@ from .models import User,UserProfile
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 #from django.contrib.auth.models import User
+from .form import UserEditForm, ProfileEditForm
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 
@@ -20,11 +24,11 @@ def register(request):
     user=SingUpSerializer(data=data)
 
     if user.is_valid():
-        if not User.objects.filter(username=data['email']).exists():
+        if not User.objects.filter(username=data['username']).exists():
             user=User.objects.create(
                 first_name=data['first_name'],
                 last_name=data['last_name'],
-                username=data['email'],
+                username=data['username'],
                 password=make_password(data['password']),
             )
             user.save()
@@ -130,4 +134,21 @@ def user_profile(request):
 
 
 
-  
+'''
+@login_required
+def edit(request):
+   if request.method == 'POST':
+      user_form = UserEditForm(instance=request.user,
+                                data=request.POST)
+      profile_form = ProfileEditForm(
+                   instance=request.user.profile,
+                   data=request.POST,
+                   files=request.FILES)
+       if user_form.is_valid() and profile_form.is_valid():
+         user_form.save()
+         profile_form.save()
+  else:
+       user_form = UserEditForm(instance=request.user)
+       profile_form = ProfileEditForm(
+                   instance=request.user.profile)
+ '''
