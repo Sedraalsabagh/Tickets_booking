@@ -52,7 +52,6 @@ def register(request):
     else:
         return Response(user.errors)
    
-
 @api_view(['POST'])
 def login(request):
 
@@ -64,25 +63,15 @@ def login(request):
                 username=data['username'],
                 password=data['password']
             )
-            if user:
-                refresh = RefreshToken.for_user(user)
-                return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-           
-            user = authenticate(
-                username=data['username'],
-                password=data['password']
-            )
-            if user:
-                refresh = RefreshToken.for_user(user)
-                return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)    
+            if not user:
+                return Response({'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+            refresh = RefreshToken.for_user(user)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
+        
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+    return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
                

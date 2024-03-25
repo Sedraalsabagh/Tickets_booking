@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import User 
 from datetime import timedelta,datetime
+#from booking.models import Booking
 # Create your models here.
 
 
@@ -25,14 +26,14 @@ class Airline (models.Model) :
      return self.airline_name     
 
 class Flight(models.Model):
-    flight_id=models.IntegerField(blank=False)
-    dateTime=models.DateTimeField(default=datetime.now)
+    #flight_id=models.IntegerField(blank=False)
+    dateTime=models.DateField(default=datetime.now)
     duration =models.DurationField(default=timedelta(days=0))
     airportDeparture=models.CharField(max_length=40)
     airportArrival=models.CharField(max_length=40)
     notes=models.TextField(max_length=200)
     total_rate=models.IntegerField(default=0)
-    #user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
+    user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
     departure_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
     destination_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
@@ -41,18 +42,13 @@ class Flight(models.Model):
     def __str__(self):
       return str(self.duration)
 
-
-
-
-
-
 class FlightSeatClass(models.Model):
     CLASS_CHOICES = (
         ('Economy', 'Economy'),
         ('Business Class', 'Business Class'),
         ('First Class', 'First Class'),
     )
-    seats_type=models.IntegerField()
+    seats_type=models.CharField(max_length=20)
     flight=models.ForeignKey(Flight,on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=5)  
     capacity = models.IntegerField()
@@ -60,6 +56,39 @@ class FlightSeatClass(models.Model):
       return self.seats_type
 
 
+
+class Airport(models.Model):
+    airport_id = models.AutoField(primary_key=True)
+    airport_name = models.CharField(max_length=100)
+    IATA_code = models.CharField(max_length=3)
+    contact_info = models.TextField()
+    country = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.airport_name
+
+
+class FlightSchedule(models.Model):
+    id = models.AutoField(primary_key=True)
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    airport = models.ForeignKey(Airport, on_delete=models.CASCADE)
+    duration = models.DurationField()
+
+    def __str__(self):
+        return f"{self.flight} - {self.airport}"
+
+
+
+#from booking.models import Booking
+
+class RefundedPayment(models.Model):
+    id = models.AutoField(primary_key=True)
+    booking_id = models.ForeignKey('booking.Booking', on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    notes = models.TextField()
+
+    def __str__(self):
+        return f"Refund for booking {self.booking_id} - Amount: {self.amount}"
 
 class Review(models.Model):
     flight_id=models.ForeignKey(Flight,null=True,on_delete=models.CASCADE,related_name='reviews')

@@ -22,16 +22,14 @@ class SingUpSerializer(serializers.ModelSerializer):
    #     fields=('first_name','last_name','email','password')
 
 
-
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
-        model =User
-        fields=('username','password')
-extra_kword={
-             'username':{'required':True,'allow_blank':False},
-             'password':{'required':True,'allow_blank':False,'min_length':8}
-           
-             }
+        model = User
+        fields = ('username', 'password')
+        extra_kwargs = {
+            'username': {'required': True, 'allow_blank': False},
+            'password': {'required': True, 'allow_blank': False, 'min_length': 8}
+        }
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
