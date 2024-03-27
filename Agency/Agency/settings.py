@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [#safaaa
+INSTALLED_APPS = [#safa
     #sedra
     'account.apps.AccountConfig',
     'django.contrib.admin',
@@ -104,7 +104,7 @@ SIMPLE_JWT={
     'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
     'BLACKLIST_AFTER_ROTATION':True,
     'AUTH_HEADER_TYPES':('Bearer',),
-    'AUTH_TOKEN_CLASSES':('rest_framework_simplejwt.tockens.AccessToken',),
+    'AUTH_TOKEN_CLASSES':('rest_framework_simplejwt.tokens.AccessToken',),
 }
 
 MEDIA_URL='media/'

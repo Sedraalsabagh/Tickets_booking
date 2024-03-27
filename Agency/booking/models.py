@@ -29,7 +29,7 @@ class Booking(models.Model):
         ('PPD', 'Postponed'),
         ('CMP', 'Completed'),
     )
-    booking_id= models.AutoField(primary_key=True,default=1)
+    booking_id= models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     outbound_flight = models.ForeignKey(Flight, related_name='outbound_bookings', on_delete=models.SET_NULL, null=True)
     return_flight = models.ForeignKey(Flight, related_name='return_bookings', on_delete=models.SET_NULL, null=True, blank=True)
@@ -39,6 +39,6 @@ class Booking(models.Model):
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='CMP')
 
     def __str__(self):
-        return f'Booking {self.id} - User: {self.user.username} - Status: {self.get_status_display()}'
+        return f'Booking {self.booking_id} - User: {self.user.username} - Status: {self.get_status_display()}'
 
         

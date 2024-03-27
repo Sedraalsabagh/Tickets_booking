@@ -26,21 +26,20 @@ class Airline (models.Model) :
      return self.airline_name     
 
 class Flight(models.Model):
-    #flight_id=models.IntegerField(blank=False)
-    dateTime=models.DateField(default=datetime.now)
+    departure_date=models.DateField(default=datetime.now)
+    return_date=models.DateField(default=datetime.now)
     duration =models.DurationField(default=timedelta(days=0))
-    airportDeparture=models.CharField(max_length=40)
-    airportArrival=models.CharField(max_length=40)
-    notes=models.TextField(max_length=200)
-    total_rate=models.IntegerField(default=0)
+    airportDeparture=models.CharField(max_length=40,blank=False,null=False)
+    airportArrival=models.CharField(max_length=40,blank=False,null=False)
+    notes=models.TextField(max_length=200,blank=True,null=True)
+    ratings=models.IntegerField(blank=True, null=True)
     user=models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
-    airline = models.ForeignKey(Airline, null=True, on_delete=models.SET_NULL)  
-    departure_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
-    destination_city = models.CharField(max_length=100,blank=False,null=False,default='unknow')
-    departure_country = models.CharField(max_length=100,blank=False,null=False,default='unknow')
-    destination_country = models.CharField(max_length=100,blank=False,null=False,default='unknow')
+    departure_city = models.CharField(max_length=100,null=True,default='')
+    destination_city = models.CharField(max_length=100,blank=False,null=False,default='')
+    departure_country = models.CharField(max_length=100,blank=False,null=False,default='')
+    destination_country = models.CharField(max_length=100,blank=False,null=False,default='')
     def __str__(self):
-      return str(self.duration)
+      return str(self.id)
 
 class FlightSeatClass(models.Model):
     CLASS_CHOICES = (

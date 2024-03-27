@@ -31,14 +31,7 @@ class Customer(models.Model):
         gender=models.SmallIntegerField(choices=GUNDER_CHOICES,null=True)
         def __str__(self):
          return self(self.user)
-'''
-class Employee(models.Model):
-        user =models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-        phone_number=models.CharField(max_length=20,blank=True,null=True)
-        location=models.CharField(max_length=40,blank=True,null=True) 
-        def str(self):
-         return self.Username
-'''
+
 class UserProfile(models.Model):
     GUNDER_CHOICES=(
         (1,'male'),
@@ -51,6 +44,7 @@ class UserProfile(models.Model):
     date_of_birth=models.DateField(blank=True,null=True)
     photo=models.ImageField(upload_to='users%Y/%m/%d/',blank=True)
     gender=models.SmallIntegerField(choices=GUNDER_CHOICES,null=True)
+    age = models.PositiveSmallIntegerField(blank=True, null=True)
     address=models.CharField(max_length=40,blank=True,null=True)
 
 

@@ -22,6 +22,3 @@ class FlightsFilter(django_filters.FilterSet):
             return super().filter_queryset(queryset)
         else:
             return queryset.none()
-        
-class FlightsFilter1(django_filters.FilterSet):    
-    seat_type = django_filters.CharFilter(field_name='seat_type', label='Seat Type class', lookup_expr='exact', required=True)
